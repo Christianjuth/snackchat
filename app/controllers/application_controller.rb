@@ -13,14 +13,19 @@ class ApplicationController < Sinatra::Base
 
   # Home page
   get "/" do
-    @all_tweets = Snack.all
+    Tweet.new("jim", "Hello I'm a Steelers fan!")
+    Tweet.new("christian", "Pizza!")
+    Tweet.new("nick", "I love Vim")
+    Tweet.new("nick", "I love Vim")
+    Tweet.new("pickle", "Yoooodllllayyyyyeeee")
+    @all_tweets = Tweet.all
     erb :index
   end
 
   # Post to Fwitter
-  post '/new_tweet' do
-    Tweet.new(params["username"], params["msg"])
-    @all_tweets = Tweet.all
-    erb :index
+POST '/tweet' do
+    tweet = Tweet.new({:user => params[:user], :status => params[:status]})
+    tweet.save
+    redirect ‘/tweets’
   end
 end
