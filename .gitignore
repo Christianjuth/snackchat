@@ -3,5 +3,6 @@ public/css/*
 public/js/*
 npm-debug.log
 db/database.db
+.sass-cache
 
 .bundle
