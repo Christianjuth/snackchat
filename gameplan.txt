@@ -1,0 +1,7 @@
+Carson:
+-- finish back end (snap validation, active record validation)
+Christian:
+-- finish front end
+Imogene: 
+-- design what it's supposed to look like
+-- gliffy- wireframe website; google material design colors for cool schemes 
