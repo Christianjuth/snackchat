@@ -1,0 +1,11 @@
+<div class="list-group">
+  <% @my_snacks.each do |snack| %>
+    <div class="list-group-item">
+      <p class="list-group-item-text">
+        <a href="<%= "/snack/#{snack.id}" %>">
+          Snack from <%= snack.username %>
+        </a>
+      </p>
+    </div>
+  <% end %>
+</div>

@@ -17,6 +17,20 @@ class ApplicationController < Sinatra::Base
     erb :index
   end
 
+  # User page
+  get "/user/:username" do
+    username = params[:username]
+    @my_snacks = Snack.where(receiver: username)
+    erb :user
+  end
+
+  # Snack page
+  get "/snack/:id" do
+    id = params[:id]
+    @snack = Snack.where(id: id)
+    erb :snack
+  end
+
   # Home page
   get "/send" do
     erb :send
