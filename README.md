@@ -1,2 +1,2 @@
-# fwitter
-Fake Twitter
+# snackchat
+Snap pictures of snacks
