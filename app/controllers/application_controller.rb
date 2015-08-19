@@ -13,12 +13,7 @@ class ApplicationController < Sinatra::Base
 
   # Home page
   get "/" do
-    Tweet.new("jim", "Hello I'm a Steelers fan!")
-    Tweet.new("christian", "Pizza!")
-    Tweet.new("nick", "I love Vim")
-    Tweet.new("nick", "I love Vim")
-    Tweet.new("pickle", "Yoooodllllayyyyyeeee")
-    @all_tweets = Tweet.all
+    @all_tweets = Snack.all
     erb :index
   end
 
