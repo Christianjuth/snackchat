@@ -27,7 +27,7 @@ class ApplicationController < Sinatra::Base
   # Snack page
   get "/snack/:id" do
     id = params[:id]
-    @snack = Snack.where(id: id)
+    @snack = Snack.where(id: id)[0]
     erb :snack
   end
 

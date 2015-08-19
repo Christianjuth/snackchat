@@ -1,5 +1,8 @@
 <div class="panel panel-default">
   <div class="panel-body">
-    <%= @snack[0].snack %>
+    <%= @snack.snack %>
   </div>
 </div>
+
+<!-- delete snack after render -->
+<% @snack.destroy %>
