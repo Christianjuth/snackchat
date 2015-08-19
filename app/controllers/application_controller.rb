@@ -2,7 +2,7 @@
 require "./config/environment"
 
 # Get models
-require "./app/models/tweet"
+require "./app/models/snack"
 
 # Set routs
 class ApplicationController < Sinatra::Base
@@ -13,19 +13,19 @@ class ApplicationController < Sinatra::Base
 
   # Home page
   get "/" do
-    Tweet.new("jim", "Hello I'm a Steelers fan!")
-    Tweet.new("christian", "Pizza!")
-    Tweet.new("nick", "I love Vim")
-    Tweet.new("nick", "I love Vim")
-    Tweet.new("pickle", "Yoooodllllayyyyyeeee")
-    @all_tweets = Tweet.all
+    @all_snacks = Snack.all
     erb :index
   end
 
-  # Post to Fwitter
-POST '/tweet' do
-    tweet = Tweet.new({:user => params[:user], :status => params[:status]})
-    tweet.save
-    redirect ‘/tweets’
+  # send snacks
+  post '/send_snack' do
+    snack = Snack.new({
+      username: params[:username],
+      snack: params[:snack],
+      receiver: params[:receiver],
+      timestamp: params[:timestamp]
+     })
+    snack.save
+    redirect ‘/’
   end
 end
