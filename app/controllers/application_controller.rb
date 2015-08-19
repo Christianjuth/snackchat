@@ -17,6 +17,11 @@ class ApplicationController < Sinatra::Base
     erb :index
   end
 
+  # Home page
+  get "/send" do
+    erb :send
+  end
+
   # send snacks
   post '/send_snack' do
     snack = Snack.new({
@@ -24,8 +29,8 @@ class ApplicationController < Sinatra::Base
       snack: params[:snack],
       receiver: params[:receiver],
       timestamp: params[:timestamp]
-     })
+    })
     snack.save
-    redirect ‘/’
+    redirect "/"
   end
 end
