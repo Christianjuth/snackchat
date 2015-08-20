@@ -28,7 +28,11 @@ class ApplicationController < Sinatra::Base
   get "/snack/:id" do
     id = params[:id]
     @snack = Snack.where(id: id)[0]
-    erb :snack
+    if @snack.nil?
+      redirect "/"
+    else
+      erb :snack
+    end
   end
 
   # Home page

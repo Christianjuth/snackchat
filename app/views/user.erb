@@ -1,10 +1,14 @@
 <div class="list-group">
   <% @my_snacks.each do |snack| %>
+      <a href="<%= "/snack/#{snack.id}" %>" class="list-group-item">
+        Snack from <%= snack.username %>
+      </a>
+  <% end %>
+
+  <% if @my_snacks.length == 0 %>
     <div class="list-group-item">
       <p class="list-group-item-text">
-        <a href="<%= "/snack/#{snack.id}" %>">
-          Snack from <%= snack.username %>
-        </a>
+        You dont have any snaps
       </p>
     </div>
   <% end %>
