@@ -1,5 +1,6 @@
 Carson:
 -- finish back end (snap validation, active record validation)
+user table : username, email, full name
 Christian:
 -- finish front end
 Imogene: 
