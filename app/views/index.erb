@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="col-xs-12 col-md-6">
   <div class="panel panel-default">
     <div class="panel-body">
@@ -14,19 +15,14 @@
         <button type="submit" class="btn btn-default pull-right">Submit</button>
       </form>
 
+=======
+<div class="list-group">
+  <% @all_snacks.each do |snack| %>
+    <div class="list-group-item">
+      <p class="list-group-item-text">
+        Snack from <%= snack.username %>
+      </p>
+>>>>>>> e4be58c912ed350ae5d98d0c4c1e216286bbf1ef
     </div>
-  </div>
-</div>
-
-
-<div class="col-xs-12 col-md-6">
-  <div class="list-group">
-    <% @all_tweets.each do |tweet| %>
-      <div class="list-group-item">
-        <p class="list-group-item-text">
-          @<%= tweet.username %> - <%= tweet.msg %>
-        </p>
-      </div>
-    <% end %>
-  </div>
+  <% end %>
 </div>
