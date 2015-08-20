@@ -2,7 +2,7 @@
 require "./config/environment"
 
 # Get models
-require "./app/models/tweet"
+require "./app/models/snack"
 
 # Set routs
 class ApplicationController < Sinatra::Base
@@ -17,15 +17,38 @@ class ApplicationController < Sinatra::Base
     erb :index
   end
 
+  # User page
+  get "/user/:username" do
+    username = params[:username]
+    @my_snacks = Snack.where(receiver: username)
+    erb :user
+  end
+
+  # Snack page
+  get "/snack/:id" do
+    id = params[:id]
+    @snack = Snack.where(id: id)[0]
+    if @snack.nil?
+      redirect "/"
+    else
+      erb :snack
+    end
+  end
+
+  # Home page
+  get "/send" do
+    erb :send
+  end
+
   # send snacks
-  POST '/send_snack' do
+  post '/send_snack' do
     snack = Snack.new({
       username: params[:username],
       snack: params[:snack],
       receiver: params[:receiver],
       timestamp: params[:timestamp]
-     })
+    })
     snack.save
-    redirect ‘/’
+    redirect "/"
   end
 end
