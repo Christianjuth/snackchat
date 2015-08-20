@@ -51,3 +51,5 @@ class ApplicationController < Sinatra::Base
     snack.save
     redirect "/"
   end
+  endclear
+  
