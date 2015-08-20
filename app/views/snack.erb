@@ -1,0 +1,14 @@
+<script type="text/javascript">
+  setTimeout(function(){
+    window.location.href = '/';
+  }, 10000);
+</script>
+
+<div class="panel panel-default">
+  <div class="panel-body">
+    <%= @snack.snack %>
+  </div>
+</div>
+
+<!-- delete snack after render -->
+<% @snack.destroy %>
