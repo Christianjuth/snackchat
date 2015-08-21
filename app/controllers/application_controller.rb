@@ -2,6 +2,7 @@
 require "./config/environment"
 
 # Get models
+require "./app/models/user"
 require "./app/models/snack"
 
 # Set routs
@@ -16,6 +17,22 @@ class ApplicationController < Sinatra::Base
     @all_snacks = Snack.all
     erb :index
   end
+
+
+  # Sign up
+  get "/sign_up" do
+    erb :sign_up
+  end
+
+  post "/sign_up" do
+    user = User.new({
+      username: params[:username],
+      email:    params[:email]
+    })
+    user.save
+    redirect '/'
+  end
+
 
   # User page
   get "/user/:username" do
@@ -35,9 +52,10 @@ class ApplicationController < Sinatra::Base
     end
   end
 
-  # Home page
-  get "/send" do
-    erb :send
+
+  # send
+  get "/send_snack" do
+    erb :send_snack
   end
 
   # send snacks
