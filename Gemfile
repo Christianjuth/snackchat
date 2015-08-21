@@ -4,6 +4,7 @@ gem "sinatra"
 gem "activerecord"
 gem "sinatra-activerecord"
 gem "rake"
+gem "sass"
 
 group :development do
   gem "shotgun"
