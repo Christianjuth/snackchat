@@ -29,21 +29,6 @@ class ApplicationController < Sinatra::Base
   end
 
 
-  # Sign up
-  get "/signup" do
-    erb :signup
-  end
-
-  post "/signup" do
-    @user = User.create({
-      username: params[:username],
-      email:    params[:email]
-    })
-    session[:user_id] = @user.id
-    redirect '/'
-  end
-
-
   # Log in
   get "/login" do
     erb :login
@@ -51,13 +36,30 @@ class ApplicationController < Sinatra::Base
 
   post "/login" do
     @user = User.find_by({:username => params[:username]})
-    if @user #exists
+    if @user
       session[:user_id] = @user.id
-      redirect "/"
+      case request_type?
+      when :ajax
+        body({
+          success: true, 
+          message: "success",
+          redirect: "/"
+        }.to_json)
+      else 
+        redirect "/"
+      end
     else
-      redirect "/login"
+      case request_type?
+      when :ajax
+        status 500
+        body({
+          success: false, 
+          message: "Incorrect username or password"
+        }.to_json)
+      else 
+        redirect "/login"
+      end
     end
-
   end
   
   #logout
@@ -78,6 +80,44 @@ class ApplicationController < Sinatra::Base
   end
 
 
+  # Sign up
+  get "/signup" do
+    erb :signup
+  end
+
+  post "/signup" do
+    @user = User.create({
+      username: params[:username],
+      email:    params[:email]
+    })
+    if @user
+      session[:user_id] = @user.id
+      case request_type?
+      when :ajax
+        body({
+          success: true, 
+          message: "success",
+          redirect: "/"
+        }.to_json)
+      else 
+        redirect "/"
+      end
+    else
+      case request_type?
+      when :ajax
+        status 500
+        body({
+          success: false, 
+          message: "Incorrect username or password"
+        }.to_json)
+      else 
+        redirect "/login"
+      end
+    end
+    redirect '/'
+  end
+
+
   # send
   get "/send_snack" do
     erb :send_snack
@@ -92,6 +132,23 @@ class ApplicationController < Sinatra::Base
     })
     snack.save
     redirect "/"
+  end
+
+
+  # Helpers
+  def error_messages_for(object)
+    all_errors = ""
+    for error in object.errors.messages do
+      key = error.first.to_s.capitalize
+      what_is_wrong = error.second.join(' and ')
+      all_errors += "#{key} #{what_is_wrong}.\n"
+    end
+    all_errors
+  end
+
+  def request_type?
+    return :ajax    if request.xhr?
+    return :normal
   end
 end
   
