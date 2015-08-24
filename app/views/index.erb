@@ -1,4 +1,11 @@
+
 <div class="list-group">
+  
+  <h2>Hello, <%=User.find(session[:user_id]).username%></h2>
+  <form action="/logout" method="post">
+    <button type="submit"class="btn btn-default1">Log out</button>
+  </form>
+  
   <% @all_snacks.each do |snack| %>
     <div class="list-group-item">
       <p class="list-group-item-text">
