@@ -65,7 +65,16 @@ class ApplicationController < Sinatra::Base
   #logout
   post "/logout" do
     session.destroy
-    redirect "/login"
+    case request_type?
+    when :ajax
+      body({
+        success: true, 
+        message: "success",
+        redirect: "/login"
+      }.to_json)
+    else 
+      redirect "/login"
+    end
   end
 
   # Snack page
@@ -114,7 +123,6 @@ class ApplicationController < Sinatra::Base
         redirect "/login"
       end
     end
-    redirect '/'
   end
 
 
@@ -125,13 +133,35 @@ class ApplicationController < Sinatra::Base
 
   # send snacks
   post '/send_snack' do
-    snack = Snack.new({
+    snack = Snack.create({
       user_id: session[:user_id],
       snack: params[:snack],
       receiver_id: params[:receiver]
     })
-    snack.save
-    redirect "/"
+    if snack.valid?
+      session[:user_id] = @user.id
+      case request_type?
+      when :ajax
+        body({
+          success: true, 
+          message: "success",
+          redirect: "/"
+        }.to_json)
+      else 
+        redirect "/"
+      end
+    else
+      case request_type?
+      when :ajax
+        status 500
+        body({
+          success: false, 
+          message: error_messages_for(snack).to_str
+        }.to_json)
+      else 
+        redirect "/send_snack"
+      end
+    end
   end
 
 
