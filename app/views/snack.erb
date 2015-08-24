@@ -1,7 +1,7 @@
 <script type="text/javascript">
   setTimeout(function(){
     window.location.href = '/';
-  }, 10000);
+  }, <%= @snack.seconds.to_i %> * 1000);
 </script>
 
 <div class="panel panel-default">

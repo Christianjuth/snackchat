@@ -24,7 +24,7 @@ class ApplicationController < Sinatra::Base
 
   # Home page
   get "/" do
-    @my_snacks = Snack.where(receiver_id: session[:user_id])
+    @my_snacks = Snack.where(receiver_id: session[:user_id]).reverse
     erb :index
   end
 
@@ -136,7 +136,8 @@ class ApplicationController < Sinatra::Base
     snack = Snack.create({
       user_id: session[:user_id],
       snack: params[:snack],
-      receiver_id: params[:receiver]
+      receiver_id: params[:receiver],
+      seconds: params[:seconds]
     })
     if snack.valid?
       session[:user_id] = @user.id
@@ -181,4 +182,3 @@ class ApplicationController < Sinatra::Base
     return :normal
   end
 end
-  
