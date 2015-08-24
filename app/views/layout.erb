@@ -18,6 +18,11 @@
     <div class="col-xs-12 col-xs-offset-0 col-md-4 col-md-offset-4">
       <%= ERB.new(File.read("./app/views/header.erb")).result(binding) %>
       <%= yield %>
+      <% if @user %>
+        <form action="/logout" method="POST" class="text-center">
+          <button type="submit" class="btn btn-link text-muted">Logout</button>
+        </form>
+      <% end %>
     </div>
   </div>
 </body>

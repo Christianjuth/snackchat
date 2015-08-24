@@ -14,9 +14,17 @@ class ApplicationController < Sinatra::Base
     set :session_secret, "carson"
   end
 
+  before do
+    if (!session[:user_id] || !User.exists?(session[:user_id]) ) && !["/login","/signup"].include?(request.path)
+      redirect "/login"
+    elsif !["/login","/signup"].include?(request.path)
+      @user = User.find(session[:user_id])
+    end
+  end
+
   # Home page
   get "/" do
-    @all_snacks = Snack.all
+    @my_snacks = Snack.where(receiver_id: session[:user_id])
     erb :index
   end
 
@@ -57,13 +65,6 @@ class ApplicationController < Sinatra::Base
     session.destroy
     redirect "/login"
   end
-  
-  # User page
-  get "/user/:username" do
-    username = params[:username]
-    @my_snacks = Snack.where(receiver: username)
-    erb :user
-  end
 
   # Snack page
   get "/snack/:id" do
@@ -85,10 +86,9 @@ class ApplicationController < Sinatra::Base
   # send snacks
   post '/send_snack' do
     snack = Snack.new({
-      username: params[:username],
+      user_id: session[:user_id],
       snack: params[:snack],
-      receiver: params[:receiver],
-      timestamp: params[:timestamp]
+      receiver_id: params[:receiver]
     })
     snack.save
     redirect "/"

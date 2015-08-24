@@ -1,10 +1,10 @@
 class CreateSnacks < ActiveRecord::Migration
 def up
     create_table :snacks do |t|
-      t.string :username
-      t.string :snack
-      t.string :receiver
-      t.integer :timestamp
+      t.integer :user_id
+      t.string  :snack
+      t.integer :receiver_id
+      t.timestamps null: false
     end
   end
   def down

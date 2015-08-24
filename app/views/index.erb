@@ -1,15 +1,14 @@
-
 <div class="list-group">
-  
-  <h2>Hello, <%=User.find(session[:user_id]).username%></h2>
-  <form action="/logout" method="post">
-    <button type="submit"class="btn btn-default1">Log out</button>
-  </form>
-  
-  <% @all_snacks.each do |snack| %>
+  <% @my_snacks.each do |snack| %>
+      <a href="<%= "/snack/#{snack.id}" %>" class="list-group-item">
+        Snack from <%= snack.user.username %>
+      </a>
+  <% end %>
+
+  <% if @my_snacks.length == 0 %>
     <div class="list-group-item">
       <p class="list-group-item-text">
-        Snack from <%= snack.username %>
+        You dont have any snaps
       </p>
     </div>
   <% end %>
