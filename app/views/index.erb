@@ -1,7 +1,7 @@
 <div class="list-group">
   <% @my_snacks.each do |snack| %>
       <a href="<%= "/snack/#{snack.id}" %>" class="list-group-item">
-        Snack from <%= snack.user.username %>
+        Snack from <%= snack.user.username %> - <%= snack.created_at %>
       </a>
   <% end %>
 
